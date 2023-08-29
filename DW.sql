@@ -57,4 +57,29 @@ create table fact_matriculas
     tf_modalidade bigint
 );
 
-select * from dim_uf
+select * from dim_uf;
+select * from dim_municipio;
+truncate table dw_inep.dim_municipio;
+truncate table fact_matriculas;
+
+insert into fact_matriculas (matriculas, tf_municipio, tf_uf)
+select * from
+(select 100 as matriculas) as matriculas,
+(select distinct tf_municipio from dim_municipio where municipio = 'Curitiba' limit 1) as tf_municipio,
+(select distinct tf_uf from dim_uf where uf = 'Paraná' limit 1) as tf_uf;
+
+select * from fact_matriculas;
+
+truncate table dim_modalidade;
+select * from dim_modalidade;
+
+select * from dim_curso;
+select * from dim_ano;
+
+truncate table dim_ies;
+select * from dim_ies;
+
+SELECT COUNT(*) FROM dim_ies;
+SELECT COUNT(*) FROM dim_ano;
+
+
